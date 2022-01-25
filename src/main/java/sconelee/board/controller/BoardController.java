@@ -3,9 +3,7 @@ package sconelee.board.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import sconelee.board.dto.BoardDto;
 import sconelee.board.service.BoardService;
 
@@ -47,5 +45,26 @@ public class BoardController {
         BoardDto boardDto = boardService.getPost(id);
         model.addAttribute("post", boardDto);
         return "board/detail";
+    }
+
+    @GetMapping("post/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model){
+        BoardDto boardDto = boardService.getPost(id);
+        model.addAttribute("post", boardDto);
+        return "board/edit";
+    }
+    @PutMapping("post/edit/{id}")
+    /*HTML Form에서는 GET방식과 POST방식의 메소드만 지원함.
+    PUT도 POST로 생각함. 그래서 HiddenHttpMethodFilter를 Bean으로 등록해줘야함
+    Hi
+    * */
+    public String update(BoardDto boardDto){
+        boardService.savePost(boardDto);
+        return "redirect:/";
+    }
+    @DeleteMapping("post/{id}")
+    public String delete(@PathVariable("id") Long id){
+        boardService.deletePost(id);
+        return "redirect:/";
     }
 }

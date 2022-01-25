@@ -2,8 +2,6 @@ package sconelee.board.service;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sconelee.board.domain.entity.Board;
@@ -15,7 +13,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-@Slf4j
 @Transactional
 public class BoardService {
     private final BoardRepository boardRepository;
@@ -54,6 +51,10 @@ public class BoardService {
                 .build();
         return boardDto;
 
+    }
+
+    public void deletePost(Long id){
+        boardRepository.deleteById(id);
     }
 
 
