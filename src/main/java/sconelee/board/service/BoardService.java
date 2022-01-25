@@ -16,16 +16,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Slf4j
+@Transactional
 public class BoardService {
     private final BoardRepository boardRepository;
 
-
-    @Transactional
-    public Long savePost(BoardDto boardDto){
+    public Long savePost(BoardDto boardDto){//포스트 저장
         return boardRepository.save(boardDto.toEntity()).getId();
     }
 
-    public List<BoardDto> getBoardList(){
+    public List<BoardDto> getBoardList(){//전체 포스트 출력
         List<Board> boardList = boardRepository.findAll();
         List<BoardDto> boardDtoList = new ArrayList<>();
         //dto로 매핑시켜줌
@@ -42,5 +41,23 @@ public class BoardService {
         }
         return boardDtoList;
     }
+
+    public BoardDto getPost(Long id){ //하나의 포스트
+        Board board = boardRepository.findById(id).get();
+
+        BoardDto boardDto = BoardDto.builder()
+                .id(board.getId())
+                .author(board.getAuthor())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .createDate(board.getCrateDate())
+                .build();
+        return boardDto;
+
+    }
+
+
+
+
 
 }
