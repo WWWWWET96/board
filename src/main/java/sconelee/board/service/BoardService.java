@@ -18,8 +18,10 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     public Long savePost(BoardDto boardDto){//포스트 저장
+
         return boardRepository.save(boardDto.toEntity()).getId();
     }
+
 
     public List<BoardDto> getBoardList(){//전체 포스트 출력
         List<Board> boardList = boardRepository.findAll();
