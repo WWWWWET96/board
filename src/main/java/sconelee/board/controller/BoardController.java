@@ -53,11 +53,15 @@ public class BoardController {
         model.addAttribute("post", boardDto);
         return "board/edit";
     }
-
+    @PutMapping("post/edit/{id}")
     /*HTML Form에서는 GET방식과 POST방식의 메소드만 지원함.
     PUT도 POST로 생각함. 그래서 HiddenHttpMethodFilter를 Bean으로 등록해줘야함
     Hi
     * */
+    public String update(BoardDto boardDto){
+        boardService.savePost(boardDto);
+        return "redirect:/";
+    }
 
     @DeleteMapping("post/{id}")
     public String delete(@PathVariable("id") Long id){
